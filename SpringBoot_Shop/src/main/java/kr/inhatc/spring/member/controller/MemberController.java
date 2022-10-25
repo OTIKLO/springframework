@@ -25,6 +25,17 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
     
+    @GetMapping("/login")
+    public String login() {
+        return "/member/memberLogin";
+    }
+    
+    @GetMapping("/login/error")
+    public String loginError(Model model) {
+        model.addAttribute("loginErrorMsg","아이디 또는 패스워드를 다시 확인하세요.");
+        return "/member/memberLogin";
+    }
+    
     @GetMapping("/new")
     public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
