@@ -28,6 +28,14 @@ public class SecurityConfig {
         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
         .logoutSuccessUrl("/");
         
+        http.authorizeRequests()
+        .mvcMatchers("/css/**", "/js/**").permitAll()
+        .mvcMatchers("/", "/member/**", "/item/**").permitAll()
+        .mvcMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated();
+        
+        http.exceptionHandling()
+        .authenticationEntryPoint(new CustomEntryPoint()); //ctrl+1 하면 CustomEntryPoint를 생성해줌
         return http.build();
     }
 
